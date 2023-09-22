@@ -40,3 +40,15 @@
 .read-the-docs {
   color: #888;
 }
+
+div.game {
+  background-image: linear-gradient(rgb(67, 57, 57), rgb(255, 255, 255));
+  width: 350px;
+  height: 220px;
+}
+
+div.score {
+  display: flex;
+  justify-content:space-between;
+
+}
