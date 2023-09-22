@@ -3,42 +3,35 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const url = "https://pokeapi.co/api/v2/pokemon/";
   const [data, setData] = useState([]);
-  const [pokemonImg, setPokemonImg] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch(url);
+      const result = await fetch("https://pokeapi.co/api/v2/pokemon/");
       result.json().then((json) => {
-        setData(json.results);
-        console.log(json.results);
+        setData(
+          json.results.map((pokemon, id) => {
+            return {
+              name: pokemon.name,
+              id: id,
+              url: pokemon.url,
+              img:
+                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" +
+                (id + 1) +
+                ".png",
+            };
+          })
+        );
       });
     };
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await fetch(url);
-      result.json().then((json) => {
-        setPokemonImg()
-      })
-    }
-  })
-
   return (
     <div>
-      {data.map((pokemon) => {
-        return (
-          <div key = {pokemon.name}>
-            <p key={pokemon.name}>{pokemon.name}</p>
-            {pokemon.url}
-            <img key = {pokemon.name}></img>
-          </div>
-        );
-      })}
-      <p>aaaaa</p>
+      {data.map((pokemon) => (
+        <img key={pokemon.name} src={pokemon.img}></img>
+      ))}
     </div>
   );
 }
